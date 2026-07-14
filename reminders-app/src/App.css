@@ -1,0 +1,237 @@
+.app {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 24px 16px 64px;
+  min-height: 100svh;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.reminder-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+}
+
+.input {
+  font: inherit;
+  color: var(--text-h);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  width: 100%;
+}
+
+.title-input {
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.form-row {
+  display: flex;
+  gap: 10px;
+  align-items: end;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--text);
+  flex: 1;
+}
+
+.field.grow {
+  flex: 2;
+}
+
+.grow {
+  flex: 1;
+}
+
+.btn-primary,
+.btn-secondary {
+  font: inherit;
+  border-radius: 8px;
+  padding: 9px 14px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: white;
+  font-weight: 500;
+}
+
+.btn-primary:hover {
+  background: var(--accent-hover);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.btn-icon {
+  background: transparent;
+  border: none;
+  color: var(--text);
+  opacity: 0.5;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 4px 8px;
+}
+
+.btn-icon:hover {
+  opacity: 1;
+  color: var(--danger);
+}
+
+.category-filter {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.pill {
+  font: inherit;
+  font-size: 13px;
+  border: 1px solid var(--pill-color);
+  color: var(--pill-color);
+  background: transparent;
+  border-radius: 999px;
+  padding: 5px 12px;
+  cursor: pointer;
+}
+
+.pill.active {
+  background: var(--pill-color);
+  color: white;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.reminder-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.reminder-item.overdue {
+  border-color: var(--danger);
+}
+
+.reminder-item.completed {
+  opacity: 0.55;
+}
+
+.reminder-item.completed .reminder-title {
+  text-decoration: line-through;
+}
+
+.checkbox {
+  width: 18px;
+  height: 18px;
+  margin-top: 3px;
+  accent-color: var(--accent);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.reminder-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.reminder-title-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.reminder-title {
+  font-weight: 500;
+  color: var(--text-h);
+}
+
+.reminder-notes {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.reminder-due {
+  font-size: 13px;
+  color: var(--text);
+  opacity: 0.75;
+}
+
+.overdue .reminder-due {
+  color: var(--danger);
+  font-weight: 500;
+}
+
+.badge {
+  font-size: 11px;
+  color: white;
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+
+.badge-outline {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.completed-section {
+  margin-top: 16px;
+}
+
+.completed-section summary {
+  cursor: pointer;
+  color: var(--text);
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--text);
+  opacity: 0.7;
+  padding: 32px 0;
+}
