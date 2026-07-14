@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coin Village - משחק מכונת מזל וכפר</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="stat coins">
+        <span class="stat-icon">🪙</span>
+        <span id="coinsValue">0</span>
+      </div>
+      <div class="stat spins">
+        <span class="stat-icon">🎟️</span>
+        <span id="spinsValue">0</span>
+        <span class="spin-timer" id="spinTimer"></span>
+      </div>
+      <div class="stat village">
+        <span class="stat-icon">🏘️</span>
+        <span id="villageValue">1</span>
+      </div>
+    </header>
+
+    <main>
+      <section class="slot-section">
+        <div class="slot-machine">
+          <div class="reels">
+            <div class="reel" id="reel0"><div class="reel-strip"></div></div>
+            <div class="reel" id="reel1"><div class="reel-strip"></div></div>
+            <div class="reel" id="reel2"><div class="reel-strip"></div></div>
+          </div>
+        </div>
+        <div class="result-banner" id="resultBanner"></div>
+        <button id="spinBtn" class="spin-btn">
+          <span class="spin-btn-label">סובב</span>
+          <span class="spin-btn-cost">1 🎟️</span>
+        </button>
+      </section>
+
+      <section class="village-section">
+        <div class="village-header">
+          <h2>הכפר שלי - כפר <span id="villageTitleNum">1</span></h2>
+          <div class="village-progress">
+            <div class="progress-bar-track">
+              <div class="progress-bar-fill" id="villageProgressFill"></div>
+            </div>
+            <span id="villageProgressText">0%</span>
+          </div>
+        </div>
+        <div class="buildings-grid" id="buildingsGrid"></div>
+        <button id="nextVillageBtn" class="next-village-btn" disabled>
+          עברו לכפר הבא ➜
+        </button>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <button id="resetBtn" class="reset-btn">איפוס משחק</button>
+    </footer>
+  </div>
+
+  <div id="floatingLayer" class="floating-layer"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
