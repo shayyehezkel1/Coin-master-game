@@ -64,7 +64,7 @@ export function ReminderItem({ reminder, category, onToggle, onDelete }: Props) 
       </button>
       <div
         className={`reminder-item ${reminder.completed ? 'completed' : ''} ${isOverdue ? 'overdue' : ''}`}
-        style={{ transform: `translateX(${offset}px)` }}
+        style={{ transform: `translateX(${offset}px)`, '--item-color': color } as React.CSSProperties}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
