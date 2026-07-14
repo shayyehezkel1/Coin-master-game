@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useReminders } from './hooks/useReminders';
 import { useCategories } from './hooks/useCategories';
 import { useNotifications } from './hooks/useNotifications';
-import { ReminderForm } from './components/ReminderForm';
 import { ReminderList } from './components/ReminderList';
 import { CategoryFilter } from './components/CategoryFilter';
 import './App.css';
@@ -20,18 +19,17 @@ function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <h1>📝 התזכורות שלי</h1>
+        <h1>תזכורות</h1>
         {permission !== 'granted' && (
-          <button className="btn-secondary" onClick={requestPermission}>
-            הפעלת התראות
+          <button className="bell-btn" onClick={requestPermission} aria-label="הפעלת התראות">
+            🔔
           </button>
         )}
       </header>
 
-      <ReminderForm categories={categories} onAdd={addReminder} onAddCategory={addCategory} />
-
       <CategoryFilter
         categories={categories}
+        reminders={reminders}
         selected={selectedCategory}
         onSelect={setSelectedCategory}
       />
@@ -41,6 +39,8 @@ function App() {
         categories={categories}
         onToggle={toggleComplete}
         onDelete={deleteReminder}
+        onAdd={addReminder}
+        onAddCategory={addCategory}
       />
     </div>
   );

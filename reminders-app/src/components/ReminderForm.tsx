@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import type { Category, Recurrence, Reminder } from '../types';
 import { recurrenceLabels } from '../utils/recurrence';
 
@@ -18,6 +18,7 @@ function defaultDueAt() {
 }
 
 export function ReminderForm({ categories, onAdd, onAddCategory }: Props) {
+  const [expanded, setExpanded] = useState(false);
   const [title, setTitle] = useState('');
   const [notes, setNotes] = useState('');
   const [dueAt, setDueAt] = useState(defaultDueAt());
@@ -25,6 +26,16 @@ export function ReminderForm({ categories, onAdd, onAddCategory }: Props) {
   const [recurrence, setRecurrence] = useState<Recurrence>('none');
   const [newCategoryName, setNewCategoryName] = useState('');
   const [showNewCategory, setShowNewCategory] = useState(false);
+  const titleRef = useRef<HTMLInputElement>(null);
+
+  function reset() {
+    setTitle('');
+    setNotes('');
+    setDueAt(defaultDueAt());
+    setRecurrence('none');
+    setShowNewCategory(false);
+    setExpanded(false);
+  }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -36,10 +47,7 @@ export function ReminderForm({ categories, onAdd, onAddCategory }: Props) {
       category: categoryId,
       recurrence,
     });
-    setTitle('');
-    setNotes('');
-    setDueAt(defaultDueAt());
-    setRecurrence('none');
+    reset();
   }
 
   function handleAddCategory() {
@@ -52,9 +60,26 @@ export function ReminderForm({ categories, onAdd, onAddCategory }: Props) {
     setShowNewCategory(false);
   }
 
+  if (!expanded) {
+    return (
+      <button
+        type="button"
+        className="add-row"
+        onClick={() => {
+          setExpanded(true);
+          requestAnimationFrame(() => titleRef.current?.focus());
+        }}
+      >
+        <span className="add-row-icon">+</span>
+        <span>תזכורת חדשה</span>
+      </button>
+    );
+  }
+
   return (
     <form className="reminder-form" onSubmit={handleSubmit}>
       <input
+        ref={titleRef}
         className="input title-input"
         type="text"
         placeholder="מה צריך לזכור?"
@@ -97,7 +122,7 @@ export function ReminderForm({ categories, onAdd, onAddCategory }: Props) {
       </div>
       <div className="form-row">
         <label className="field grow">
-          <span>קטגוריה</span>
+          <span>רשימה</span>
           <select
             className="input"
             value={categoryId}
@@ -115,7 +140,7 @@ export function ReminderForm({ categories, onAdd, onAddCategory }: Props) {
           className="btn-secondary"
           onClick={() => setShowNewCategory((v) => !v)}
         >
-          + קטגוריה
+          + רשימה
         </button>
       </div>
       {showNewCategory && (
@@ -123,7 +148,7 @@ export function ReminderForm({ categories, onAdd, onAddCategory }: Props) {
           <input
             className="input grow"
             type="text"
-            placeholder="שם קטגוריה חדשה"
+            placeholder="שם רשימה חדשה"
             value={newCategoryName}
             onChange={(e) => setNewCategoryName(e.target.value)}
           />
@@ -132,9 +157,14 @@ export function ReminderForm({ categories, onAdd, onAddCategory }: Props) {
           </button>
         </div>
       )}
-      <button type="submit" className="btn-primary">
-        הוספת תזכורת
-      </button>
+      <div className="form-row">
+        <button type="button" className="btn-secondary grow" onClick={reset}>
+          ביטול
+        </button>
+        <button type="submit" className="btn-primary grow">
+          הוספה
+        </button>
+      </div>
     </form>
   );
 }
