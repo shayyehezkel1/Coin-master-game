@@ -7,12 +7,84 @@
   const MAX_BUILDING_LEVEL = 4;
 
   const BUILDINGS = [
-    { name: "בית", icon: "🏠", baseCost: 800 },
-    { name: "מזרקה", icon: "⛲", baseCost: 2200 },
-    { name: "גינה", icon: "🌳", baseCost: 5500 },
-    { name: "חווה", icon: "🐔", baseCost: 14000 },
-    { name: "מקדש", icon: "⛪", baseCost: 35000 },
-    { name: "טירה", icon: "🏰", baseCost: 90000 },
+    {
+      name: "בית",
+      baseCost: 800,
+      svg: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="32,10 8,30 56,30" fill="#c0453a" stroke="#7a2a20" stroke-width="2"/>
+        <rect x="14" y="30" width="36" height="26" fill="#f2d9a8" stroke="#8a5a2a" stroke-width="2"/>
+        <rect x="28" y="38" width="10" height="18" fill="#7a4a24"/>
+        <rect x="18" y="36" width="10" height="10" fill="#bfe3f7" stroke="#6b4020" stroke-width="1.5"/>
+        <line x1="23" y1="36" x2="23" y2="46" stroke="#6b4020" stroke-width="1.5"/>
+        <line x1="18" y1="41" x2="28" y2="41" stroke="#6b4020" stroke-width="1.5"/>
+        <rect x="40" y="14" width="6" height="10" fill="#8a8a8a"/>
+      </svg>`,
+    },
+    {
+      name: "מזרקה",
+      baseCost: 2200,
+      svg: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="32" cy="52" rx="22" ry="7" fill="#9aa7ad" stroke="#6b7378" stroke-width="2"/>
+        <rect x="26" y="30" width="12" height="20" fill="#c7d2d6" stroke="#6b7378" stroke-width="2"/>
+        <ellipse cx="32" cy="30" rx="16" ry="5" fill="#bcd8ea" stroke="#6b7378" stroke-width="2"/>
+        <circle cx="32" cy="18" r="4" fill="#eaf6fc"/>
+        <path d="M32 18 C 28 24, 24 26, 22 30" stroke="#7ec8f4" stroke-width="2" fill="none"/>
+        <path d="M32 18 C 36 24, 40 26, 42 30" stroke="#7ec8f4" stroke-width="2" fill="none"/>
+      </svg>`,
+    },
+    {
+      name: "גינה",
+      baseCost: 5500,
+      svg: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+        <rect x="28" y="38" width="8" height="18" fill="#7a4a24"/>
+        <circle cx="24" cy="30" r="12" fill="#6fbf3d"/>
+        <circle cx="40" cy="30" r="12" fill="#5aa832"/>
+        <circle cx="32" cy="20" r="13" fill="#7fd24d"/>
+        <circle cx="18" cy="54" r="3" fill="#e05a4e"/>
+        <circle cx="46" cy="54" r="3" fill="#ffd23f"/>
+      </svg>`,
+    },
+    {
+      name: "חווה",
+      baseCost: 14000,
+      svg: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="10,28 32,10 54,28" fill="#8a3c30" stroke="#5c2018" stroke-width="2"/>
+        <rect x="12" y="28" width="40" height="24" fill="#c0453a" stroke="#5c2018" stroke-width="2"/>
+        <rect x="27" y="34" width="10" height="18" fill="#f2e6c8" stroke="#5c2018" stroke-width="1.5"/>
+        <line x1="27" y1="34" x2="37" y2="52" stroke="#5c2018" stroke-width="1.5"/>
+        <line x1="37" y1="34" x2="27" y2="52" stroke="#5c2018" stroke-width="1.5"/>
+        <circle cx="45" cy="38" r="4" fill="#f2e6c8" stroke="#5c2018" stroke-width="1.5"/>
+      </svg>`,
+    },
+    {
+      name: "מקדש",
+      baseCost: 35000,
+      svg: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+        <rect x="16" y="30" width="32" height="26" fill="#f7f0dc" stroke="#8a5a2a" stroke-width="2"/>
+        <polygon points="16,30 32,16 48,30" fill="#8a97a3" stroke="#5c6672" stroke-width="2"/>
+        <rect x="27" y="6" width="10" height="12" fill="#8a97a3" stroke="#5c6672" stroke-width="2"/>
+        <polygon points="27,6 32,0 37,6" fill="#5c6672"/>
+        <rect x="30" y="2" width="4" height="10" fill="#d99400"/>
+        <rect x="27" y="5" width="10" height="4" fill="#d99400"/>
+        <path d="M27,42 a5,5 0 0 1 10,0 v14 h-10 z" fill="#bcd8ea" stroke="#5c6672" stroke-width="1.5"/>
+      </svg>`,
+    },
+    {
+      name: "טירה",
+      baseCost: 90000,
+      svg: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+        <rect x="14" y="30" width="36" height="26" fill="#9aa7ad" stroke="#5c6672" stroke-width="2"/>
+        <rect x="12" y="18" width="10" height="14" fill="#9aa7ad" stroke="#5c6672" stroke-width="2"/>
+        <rect x="42" y="18" width="10" height="14" fill="#9aa7ad" stroke="#5c6672" stroke-width="2"/>
+        <polygon points="12,18 17,8 22,18" fill="#c0453a" stroke="#5c6672" stroke-width="2"/>
+        <polygon points="42,18 47,8 52,18" fill="#c0453a" stroke="#5c6672" stroke-width="2"/>
+        <rect x="27" y="38" width="10" height="18" fill="#4a2c14"/>
+        <rect x="27" y="24" width="6" height="6" fill="#5c6672"/>
+        <rect x="37" y="24" width="6" height="6" fill="#5c6672"/>
+        <rect x="30" y="4" width="3" height="10" fill="#7a4e00"/>
+        <polygon points="33,4 42,7 33,10" fill="#e05a4e"/>
+      </svg>`,
+    },
   ];
 
   const OUTCOME_TYPES = [
@@ -215,7 +287,7 @@
 
       const icon = document.createElement("div");
       icon.className = "building-icon";
-      icon.textContent = b.icon;
+      icon.innerHTML = b.svg;
 
       const name = document.createElement("div");
       name.className = "building-name";
@@ -358,7 +430,7 @@
 
     visitOverlay.dataset.mode = outcome.type;
     visitTitle.textContent = `מבקר/ת בכפר של ${rival.name} - כפר ${rival.villageNum}`;
-    visitBuildingIcon.textContent = rival.building.icon;
+    visitBuildingIcon.innerHTML = rival.building.svg;
     visitBuildingIcon.classList.remove("smashed");
     visitBuildingName.textContent = `${rival.building.name} (רמה ${rival.fakeLevel}/${MAX_BUILDING_LEVEL})`;
     visitResult.textContent = "";
