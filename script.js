@@ -25,6 +25,11 @@
   const ALL_SYMBOLS = OUTCOME_TYPES.map((o) => o.symbol);
   const TOTAL_WEIGHT = OUTCOME_TYPES.reduce((s, o) => s + o.weight, 0);
 
+  const RIVAL_NAMES = [
+    "דני", "נועה", "יוסי", "מיכל", "אורי", "שירה",
+    "רון", "טל", "גיא", "ליאור", "אביב", "הדר",
+  ];
+
   // ---------- DOM ----------
   const coinsValueEl = document.getElementById("coinsValue");
   const spinsValueEl = document.getElementById("spinsValue");
@@ -38,13 +43,19 @@
   const spinBtn = document.getElementById("spinBtn");
   const resultBanner = document.getElementById("resultBanner");
   const floatingLayer = document.getElementById("floatingLayer");
-  const slotMachineEl = document.querySelector(".slot-machine");
   const resetBtn = document.getElementById("resetBtn");
   const reelEls = [
     document.getElementById("reel0"),
     document.getElementById("reel1"),
     document.getElementById("reel2"),
   ];
+  const visitOverlay = document.getElementById("visitOverlay");
+  const visitTitle = document.getElementById("visitTitle");
+  const visitBuildingIcon = document.getElementById("visitBuildingIcon");
+  const visitBuildingName = document.getElementById("visitBuildingName");
+  const visitResult = document.getElementById("visitResult");
+  const visitActionBtn = document.getElementById("visitActionBtn");
+  const visitReturnBtn = document.getElementById("visitReturnBtn");
 
   // ---------- State ----------
   let state = loadState();
@@ -301,7 +312,13 @@
         strip.innerHTML = `<div class="symbol">${outcome.symbol}</div>`;
 
         if (i === reelEls.length - 1) {
-          setTimeout(() => resolveOutcome(outcome), 200);
+          setTimeout(() => {
+            if (outcome.type === "attack" || outcome.type === "raid") {
+              openVisit(outcome);
+            } else {
+              resolveOutcome(outcome);
+            }
+          }, 200);
         }
       }, 600 + i * 300);
     });
@@ -314,16 +331,69 @@
       state.spins = Math.min(MAX_SPINS, state.spins + reward.extraSpin);
     }
 
-    if (outcome.type === "attack" || outcome.type === "raid") {
-      slotMachineEl.classList.add("shake");
-      setTimeout(() => slotMachineEl.classList.remove("shake"), 400);
-    }
-
     showFloatingText(`+${formatNumber(reward.coins)} 🪙`, "#ffc93c");
     showResultBanner(messageFor(outcome.type, reward));
 
     spinning = false;
     saveState();
+    render();
+  }
+
+  // ---------- Visiting another player's village ----------
+  function randomRival() {
+    const name = RIVAL_NAMES[Math.floor(Math.random() * RIVAL_NAMES.length)];
+    const villageNum = 1 + Math.floor(Math.random() * 6);
+    const building = BUILDINGS[Math.floor(Math.random() * BUILDINGS.length)];
+    const fakeLevel = Math.floor(Math.random() * (MAX_BUILDING_LEVEL + 1));
+    return { name, villageNum, building, fakeLevel };
+  }
+
+  function openVisit(outcome) {
+    const rival = randomRival();
+    const reward = computeReward(outcome.type, state.village);
+
+    visitOverlay.dataset.mode = outcome.type;
+    visitTitle.textContent = `מבקר/ת בכפר של ${rival.name} - כפר ${rival.villageNum}`;
+    visitBuildingIcon.textContent = rival.building.icon;
+    visitBuildingIcon.classList.remove("smashed");
+    visitBuildingName.textContent = `${rival.building.name} (רמה ${rival.fakeLevel}/${MAX_BUILDING_LEVEL})`;
+    visitResult.textContent = "";
+    visitResult.classList.remove("show");
+    visitActionBtn.hidden = false;
+    visitActionBtn.disabled = false;
+    visitActionBtn.textContent = outcome.type === "attack" ? "🔨 תקוף ושבור!" : "🐷 חפור אוצר!";
+    visitReturnBtn.hidden = true;
+
+    visitActionBtn.onclick = () => performVisitAction(outcome, rival, reward);
+
+    visitOverlay.classList.add("show");
+  }
+
+  function performVisitAction(outcome, rival, reward) {
+    visitActionBtn.disabled = true;
+    visitBuildingIcon.classList.add("smashed");
+
+    setTimeout(() => {
+      state.coins += reward.coins;
+      if (reward.extraSpin) {
+        state.spins = Math.min(MAX_SPINS, state.spins + reward.extraSpin);
+      }
+      saveState();
+
+      const message =
+        outcome.type === "attack"
+          ? `💥 שברת את ה${rival.building.name} של ${rival.name} וגנבת ${formatNumber(reward.coins)} מטבעות!`
+          : `⛏️ מצאת מטמון חבוי בכפר של ${rival.name}! +${formatNumber(reward.coins)} מטבעות!`;
+      visitResult.textContent = message;
+      visitResult.classList.add("show");
+      visitActionBtn.hidden = true;
+      visitReturnBtn.hidden = false;
+    }, 500);
+  }
+
+  function closeVisit() {
+    visitOverlay.classList.remove("show");
+    spinning = false;
     render();
   }
 
@@ -343,6 +413,7 @@
   spinBtn.addEventListener("click", spin);
   nextVillageBtn.addEventListener("click", goToNextVillage);
   resetBtn.addEventListener("click", resetGame);
+  visitReturnBtn.addEventListener("click", closeVisit);
 
   regenSpins();
   render();
