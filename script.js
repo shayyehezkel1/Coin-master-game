@@ -209,6 +209,10 @@
       const card = document.createElement("div");
       card.className = "building-card" + (maxed ? " maxed" : "");
 
+      const stars = document.createElement("div");
+      stars.className = "card-stars";
+      stars.textContent = "⭐".repeat(lvl) + "☆".repeat(MAX_BUILDING_LEVEL - lvl);
+
       const icon = document.createElement("div");
       icon.className = "building-icon";
       icon.textContent = b.icon;
@@ -227,7 +231,7 @@
       upgradeBtn.textContent = maxed ? "הושלם ✓" : `שדרג (${formatNumber(cost)} 🪙)`;
       upgradeBtn.addEventListener("click", () => upgradeBuilding(i));
 
-      card.append(icon, name, level, upgradeBtn);
+      card.append(stars, icon, name, level, upgradeBtn);
       buildingsGridEl.appendChild(card);
     });
 
