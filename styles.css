@@ -23,6 +23,8 @@
   --green-btn-dark: #3f8a1e;
   --red: #e05a4e;
   --red-dark: #a5352b;
+  --orange: #ff8a3d;
+  --orange-dark: #d85f13;
 }
 
 body {
@@ -203,27 +205,30 @@ body {
 }
 
 .spin-btn {
-  margin-top: 16px;
-  background: linear-gradient(180deg, #8fe25c, var(--green-btn));
-  border: 3px solid var(--wood-outline);
-  border-radius: 40px;
-  padding: 14px 40px;
-  font-size: 18px;
-  font-weight: 800;
-  color: #1f4a0c;
+  margin-top: 18px;
+  background: linear-gradient(180deg, #ffb066, var(--orange));
+  border: 4px solid #fff6e2;
+  outline: 3px solid var(--orange-dark);
+  border-radius: 999px;
+  padding: 16px 56px;
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  color: #fff6e2;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
   cursor: pointer;
-  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.4), 0 6px 0 var(--green-btn-dark), 0 9px 14px rgba(0, 0, 0, 0.35);
+  box-shadow: inset 0 3px 0 rgba(255, 255, 255, 0.45), 0 6px 0 var(--orange-dark), 0 10px 16px rgba(0, 0, 0, 0.35);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2px;
   transition: transform 0.06s ease;
-  min-width: 160px;
+  min-width: 180px;
 }
 
 .spin-btn:active:not(:disabled) {
   transform: translateY(4px);
-  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.4), 0 2px 0 var(--green-btn-dark), 0 4px 8px rgba(0, 0, 0, 0.35);
+  box-shadow: inset 0 3px 0 rgba(255, 255, 255, 0.45), 0 2px 0 var(--orange-dark), 0 4px 8px rgba(0, 0, 0, 0.35);
 }
 
 .spin-btn:disabled {
@@ -232,8 +237,11 @@ body {
 }
 
 .spin-btn-cost {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
+  letter-spacing: 0.3px;
+  opacity: 0.85;
+  text-shadow: none;
 }
 
 /* Village section */
@@ -322,12 +330,12 @@ body {
 }
 
 .building-upgrade-btn {
-  margin-top: 4px;
+  margin-top: 6px;
   width: 100%;
   background: linear-gradient(180deg, #8fb8e8, #4d7fc2);
   border: 2px solid #2a4d7d;
-  border-radius: 10px;
-  padding: 8px 6px;
+  border-radius: 999px;
+  padding: 8px 10px;
   color: #fff;
   font-size: 12px;
   font-weight: 800;
@@ -493,6 +501,45 @@ body {
   border-radius: 14px;
   padding: 20px 10px;
   margin-bottom: 14px;
+}
+
+.visit-target {
+  position: relative;
+  width: 88px;
+  height: 88px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  --reticle-color: rgba(224, 90, 78, 0.85);
+}
+
+.visit-overlay[data-mode="raid"] .visit-target {
+  --reticle-color: rgba(138, 106, 46, 0.85);
+}
+
+.visit-target::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 3px solid var(--reticle-color);
+  border-radius: 50%;
+  animation: targetPulse 1.4s ease-in-out infinite;
+}
+
+.visit-target::after {
+  content: "";
+  position: absolute;
+  inset: -16px;
+  opacity: 0.7;
+  background:
+    linear-gradient(var(--reticle-color), var(--reticle-color)) center / 2px 100% no-repeat,
+    linear-gradient(var(--reticle-color), var(--reticle-color)) center / 100% 2px no-repeat;
+}
+
+@keyframes targetPulse {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.08); opacity: 1; }
 }
 
 .visit-building {
