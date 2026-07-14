@@ -75,7 +75,11 @@
   }
 
   function saveState() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch (e) {
+      // storage unavailable (e.g. private browsing / restricted preview) - game still playable in-session
+    }
   }
 
   // ---------- Helpers ----------
@@ -325,7 +329,11 @@
 
   function resetGame() {
     if (!confirm("לאפס את כל ההתקדמות במשחק?")) return;
-    localStorage.removeItem(STORAGE_KEY);
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch (e) {
+      // storage unavailable - ignore, in-memory state is reset below regardless
+    }
     state = defaultState();
     saveState();
     render();
