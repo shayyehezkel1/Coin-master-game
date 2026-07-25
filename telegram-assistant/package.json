@@ -5,7 +5,9 @@
   "type": "commonjs",
   "main": "src/bot.js",
   "scripts": {
-    "start": "node src/bot.js"
+    "start": "node src/bot.js",
+    "service:install": "node windows-service/install-service.js",
+    "service:uninstall": "node windows-service/uninstall-service.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.32.1",
