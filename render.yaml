@@ -1,0 +1,22 @@
+services:
+  - type: worker
+    name: telegram-personal-assistant
+    env: node
+    plan: starter
+    rootDir: telegram-assistant
+    buildCommand: npm install
+    startCommand: npm start
+    autoDeploy: true
+    envVars:
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: CLAUDE_MODEL
+        value: claude-sonnet-5
+      - key: DB_PATH
+        value: /var/data/db.json
+    disk:
+      name: assistant-data
+      mountPath: /var/data
+      sizeGB: 1
